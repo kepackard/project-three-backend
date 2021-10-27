@@ -10,6 +10,9 @@ const express = require("express");
 const app = express();
 //import mongoose
 const mongoose = require("mongoose");
+//import middleware
+const cors = require("cors");
+const morgan = require("morgan");
 
 //database connection
 //establish connection
@@ -19,7 +22,27 @@ mongoose.connection
     .on("open", () => console.log("You are connected to MongoDB"))
     .on("close", () => console.log("You are disconnected from MongoDB"))
     .on("error", (error) => console.log(error));
-    
+
+// models
+const PlansSchema = new mongoose.Schema(
+    {
+        title: String,
+        parks: String,
+        questionObjective: String,
+        gradeLevel: String,
+        subject: String, 
+        duration: String,
+        url: String,
+    }
+);
+
+const Plans = mongoose.model("Plans", PlansSchema);
+
+// middleware
+app.use(cors); // to prevent cors errors, open access to all origins
+app.use(morgan("dev")); //logging
+app.use(express.json()); //parse json bodies
+
 //routes
 
 // create a test route
