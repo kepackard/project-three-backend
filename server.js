@@ -29,7 +29,7 @@ db.on('connected', () => console.log('Connected to MongoDB'));
 db.on('disconnected', () => console.log('Disconnected from MongoDB'));
 db.on('error', () => console.log(`An Error Has Occurred with MongoDB: ${error.message}`));
 
-// // models
+// // model
 const plansSchema = new mongoose.Schema(
     {
         title: String,
