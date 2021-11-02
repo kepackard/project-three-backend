@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: false }))
 mongoose.connect(DATABASE_URL);
 const db = mongoose.connection;
 
+
 db.on('connected', () => console.log('Connected to MongoDB'));
 db.on('disconnected', () => console.log('Disconnected from MongoDB'));
 db.on('error', () => console.log(`An Error Has Occurred with MongoDB: ${error.message}`));
