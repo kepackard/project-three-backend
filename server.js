@@ -84,29 +84,29 @@ app.post("/plans", async (req, res) => {
     }
 });
 
-// // DELETE ROUTE
-// app.delete("/plans/:id", async (req, res) => {
-//   try {
-//     // send all plans
-//     res.json(await Plan.findByIdAndDelete(req.params.id));
-//   } catch (error) {
-//     //send error
-//     res.status(400).json(error);
-//   }
-// });
+// DELETE ROUTE
+app.delete("/plans/:id", async (req, res) => {
+  try {
+    // send all plans
+    res.json(await Plan.findByIdAndDelete(req.params.id));
+  } catch (error) {
+    //send error
+    res.status(400).json(error);
+  }
+});
 
-// // UPDATE ROUTE
-// app.put("/plans/:id", async (req, res) => {
-//   try {
-//     // send all plans
-//     res.json(
-//       await Plan.findByIdAndUpdate(req.params.id, req.body, { new: true })
-//     );
-//   } catch (error) {
-//     //send error
-//     res.status(400).json(error);
-//   }
-// });
+// UPDATE ROUTE
+app.put("/plans/:id", async (req, res) => {
+  try {
+    // send all plans
+    res.json(
+      await Plan.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    );
+  } catch (error) {
+    //send error
+    res.status(400).json(error);
+  }
+});
 
 app.get('/', (req, res) => res.redirect('/plans'))
 
