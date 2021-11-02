@@ -55,7 +55,7 @@ app.get("/api", (req, res) => {
 //     res.send("hello world!");
 // });
 
-app.get('/', (req, res) => res.redirect('/plans'))
+
 
 // seed route
 app.get("/plans/seed", (req, res) => {
@@ -108,6 +108,7 @@ app.post("/plans", async (req, res) => {
 //   }
 // });
 
+app.get('/', (req, res) => res.redirect('/plans'))
 
 //listener
 app.listen(PORT, () => console.log("listening on PORT ${PORT}"));
