@@ -1,9 +1,8 @@
-//
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const plansSchema = new mongoose.Schema(
+const planSchema = new mongoose.Schema(
     {
         title: String,
         parks: String,
@@ -15,4 +14,4 @@ const plansSchema = new mongoose.Schema(
     }, { timestamps: true }
 );
 
-module.exports = mongoose.model("Plans", plansSchema);
+module.exports = mongoose.model("Plan", planSchema);

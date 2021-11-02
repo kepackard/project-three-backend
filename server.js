@@ -3,17 +3,17 @@ const { PORT=3001, DATABASE_URL } = process.env;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const plansSeed = require("./models/plansSeed.js");
+const planSeed = require("./models/planSeed.js");
+const Plan = require("./models/planSchema");
 
 //middleware
 const cors = require("cors");
 const morgan = require("morgan");
-const bodyParser = require("body-parser");
 app.use(express.urlencoded({ extended: false }))
 
 //API DETAILS
 
-const BASE_URL = "https://developer.nps.gov/api/v1/lessonplans"
+// const BASE_URL = "https://developer.nps.gov/api/v1/lessonplans"
 
 //database connection
 mongoose.connect(DATABASE_URL);
@@ -30,12 +30,12 @@ app.use(cors()); // to prevent cors errors, open access to all origins
 app.use(morgan("dev")); //logging
 app.use(express.json()); //parse json bodies
 
-//parse application/x-www-form-urlencoded 
-app.use(bodyParser.urlencoded({ extended: false }))
 
-//parse application/json 
-app.use(bodyParser.json())
-
+// call to React front end
+app.get("/api", (req, res) => {
+    res.json({ message: "Hello from server!" })
+  });
+  
 //API CALL
 
 // function getPlanData(event) {
@@ -55,11 +55,13 @@ app.use(bodyParser.json())
 //     res.send("hello world!");
 // });
 
+app.get('/', (req, res) => res.redirect('/plans'))
+
 // seed route
 app.get("/plans/seed", (req, res) => {
-    Plans.deleteMany({}, (error, allPlans) => {})
+    Plan.deleteMany({}, (error, allPlans) => {})
     
-    Plans.create(planSeed, (error, data) => {
+    Plan.create(planSeed, (error, data) => {
         res.redirect("/plans")
     })
 });
@@ -67,7 +69,7 @@ app.get("/plans/seed", (req, res) => {
 //index route
 app.get("/plans", async (req, res) => {
     try {
-        res.json(await Plans.find({}));
+        res.json(await Plan.find({}));
     } catch (error) {
         res.status(400).json(error);
     }
@@ -76,7 +78,7 @@ app.get("/plans", async (req, res) => {
 // create route
 app.post("/plans", async (req, res) => {
     try {
-        res.json(await Plans.create(req.body));
+        res.json(await Plan.create(req.body));
     } catch (error) {
         res.status(400).json(error);
     }
@@ -86,7 +88,7 @@ app.post("/plans", async (req, res) => {
 // app.delete("/plans/:id", async (req, res) => {
 //   try {
 //     // send all plans
-//     res.json(await Plans.findByIdAndDelete(req.params.id));
+//     res.json(await Plan.findByIdAndDelete(req.params.id));
 //   } catch (error) {
 //     //send error
 //     res.status(400).json(error);
@@ -98,7 +100,7 @@ app.post("/plans", async (req, res) => {
 //   try {
 //     // send all plans
 //     res.json(
-//       await Plans.findByIdAndUpdate(req.params.id, req.body, { new: true })
+//       await Plan.findByIdAndUpdate(req.params.id, req.body, { new: true })
 //     );
 //   } catch (error) {
 //     //send error
