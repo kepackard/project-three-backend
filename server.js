@@ -3,17 +3,12 @@ const { PORT=3001, DATABASE_URL } = process.env;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const planSeed = require("./models/planSeed.js");
 const Plan = require("./models/planSchema");
 
 //middleware
 const cors = require("cors");
 const morgan = require("morgan");
 app.use(express.urlencoded({ extended: false }))
-
-//API DETAILS
-
-// const BASE_URL = "https://developer.nps.gov/api/v1/lessonplans"
 
 //database connection
 mongoose.connect(DATABASE_URL);
@@ -58,15 +53,6 @@ app.get("/api", (req, res) => {
 
 //
 
-// seed route
-app.get("/plans/seed", (req, res) => {
-    Plan.deleteMany({}, (error, allPlans) => {})
-    
-    Plan.create(planSeed, (error, data) => {
-        res.redirect("/plans")
-    })
-});
-
 //index route
 app.get("/plans", async (req, res) => {
     try {
@@ -76,8 +62,13 @@ app.get("/plans", async (req, res) => {
     }
 });
 
+// new route
+app.get("/plans/new", (req, res) => {
+  res.send("New Test")
+});
+
 // create route
-app.post("/plans", async (req, res) => {
+app.post("/plans/", async (req, res) => {
     try {
         res.json(await Plan.create(req.body));
     } catch (error) {
