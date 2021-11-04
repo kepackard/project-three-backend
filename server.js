@@ -44,16 +44,9 @@ app.get("/api", (req, res) => {
 //         )
 // };
 
-//routes
+// ROUTES
 
-// create a test route
-// app.get("/plans", (req, res) => {
-//     res.send("hello world!");
-// });
-
-//
-
-//index route
+// INDEX ROUTE
 app.get("/plans", async (req, res) => {
     try {
         res.json(await Plan.find({}));
@@ -62,12 +55,32 @@ app.get("/plans", async (req, res) => {
     }
 });
 
-// new route
-app.get("/plans/new", (req, res) => {
-  res.send("New Test")
+// // NEW ROUTE
+// app.get("/plans/new", async (req, res) => {
+//   res.json({ error })
+// });
+
+// DELETE ROUTE
+app.delete("/plans/:id", async (req, res) => {
+  try {
+    res.json(await Plan.findByIdAndDelete(req.params.id));
+  } catch (error) {
+    res.status(400).json(error);
+  }
 });
 
-// create route
+// UPDATE ROUTE
+app.put("/plans/:id", async (req, res) => {
+  try {
+    res.json(
+      await Plan.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    );
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
+// CREATE ROUTE
 app.post("/plans/", async (req, res) => {
     try {
         res.json(await Plan.create(req.body));
@@ -76,31 +89,7 @@ app.post("/plans/", async (req, res) => {
     }
 });
 
-// DELETE ROUTE
-app.delete("/plans/:id", async (req, res) => {
-  try {
-    // send all plans
-    res.json(await Plan.findByIdAndDelete(req.params.id));
-  } catch (error) {
-    //send error
-    res.status(400).json(error);
-  }
-});
-
-// UPDATE ROUTE
-app.put("/plans/:id", async (req, res) => {
-  try {
-    // send all plans
-    res.json(
-      await Plan.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    );
-  } catch (error) {
-    //send error
-    res.status(400).json(error);
-  }
-});
-
 app.get('/', (req, res) => res.redirect('/plans'))
 
-//listener
+// LISTENER
 app.listen(PORT, () => console.log("listening on PORT ${PORT}"));
