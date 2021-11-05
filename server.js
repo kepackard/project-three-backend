@@ -22,9 +22,9 @@ db.on('error', () => console.log(`An Error Has Occurred with MongoDB: ${error.me
 
 
 // middleware
-app.use(cors()); // to prevent cors errors, open access to all origins
-app.use(morgan("dev")); //logging
-app.use(express.json()); //parse json bodies
+app.use(cors());
+app.use(morgan("dev")); 
+app.use(express.json()); 
 
 
 // call to React front end
@@ -32,18 +32,6 @@ app.get("/api", (req, res) => {
     res.json({ message: "Hello from server!" })
   });
   
-//API CALL
-
-// function getPlanData(event) {
-//     event.preventDefault();
-//     const lessonPlans = $input.val();
-//         $input.val("");
-
-//         $.ajax(`${BASE_URL}/?api_key={API_KEY}`).then(function(results) {
-//             console.log(results);
-//         )
-// };
-
 // ROUTES
 
 // INDEX ROUTE
@@ -54,11 +42,6 @@ app.get("/plans", async (req, res) => {
         res.status(400).json(error);
     }
 });
-
-// // NEW ROUTE
-// app.get("/plans/new", async (req, res) => {
-//   res.json({ error })
-// });
 
 // DELETE ROUTE
 app.delete("/plans/:id", async (req, res) => {
